@@ -37,3 +37,45 @@ C-Tier
     Llama 3.1 405B (Meta)
 
     Command R+ (Cohere)
+
+
+
+    LLM Tier List(2026)
+
+S-Tier
+
+    ChatGPT 5.4 Pro / Pro (OpenAI)
+
+    Claude Mythos 5 / Fable 5 (Anthropic)
+
+    Claude 4.6 Opus (Anthropic)
+
+A-Tier
+
+    Gemini 3 Pro / 3.1 Pro (Google)
+
+    DeepSeek-R1 / V3.2 (DeepSeek)
+
+    ChatGPT 5.3 Codex (OpenAI)
+
+    Kimi K2 Thinking / K2.5 (Moonshot)
+
+B-Tier
+
+    Claude 4.6 Sonnet (Anthropic)
+
+    Grok 4.1 Fast Reasoning (xAI)
+
+    Llama 4 Maverick (Meta)
+
+    OpenAI o3 / o3-mini
+
+C-Tier
+
+    Gemini 2.5 Flash / 3.5 Flash (Google)
+
+    Mistral Medium 3.1 / Large (Mistral)
+
+    Sonar Deep Research (Perplexity)
+
+    Qwen 3.5 / 3.6 Plus (Alibaba)
