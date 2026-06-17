@@ -1,39 +1,40 @@
-LLM Tier List (2025)
+Image Generation Tier List (2025)
 
 S-Tier
 
-    Claude 3.7 Sonnet (Anthropic)
+    FLUX.1.1 Pro (Black Forest Labs)
 
-    OpenAI o3 / o3-mini
+    Midjourney v7 / v6.5
 
-    DeepSeek-R1
+    Ideogram 2.0
 
 A-Tier
 
-    Claude 3.5 Sonnet (Anthropic)
+    FLUX.1 Pro / Dev (Black Forest Labs)
 
-    Gemini 2.0 Flash / 2.5 Pro (Google)
+    Imagen 3 (Google)
 
-    OpenAI o1 / o1-mini
+    Recraft v3
 
-    GPT-4o (OpenAI)
+    GPT Image 2 / 1.5 (OpenAI)
 
 B-Tier
 
-    DeepSeek-V3
+    Stable Diffusion 3.5 Large (Stability AI)
 
-    Grok 3 (xAI)
+    Adobe Firefly Image 3
 
-    Llama 3.3 70B (Meta)
+    Krea AI (2025 Real-time Engine)
 
-    Claude 3.5 Haiku (Anthropic)
+    Grok 2 Image (xAI)
 
 C-Tier
 
-    Qwen 2.5 VL / 72B (Alibaba)
+    AuraFlow
 
-    Mistral Large 2
+    Lumina-Next
 
-    Llama 3.1 405B (Meta)
+    PixArt-Sigma
 
-    Command R+ (Cohere)
+    Hunyuan-DiT (Tencent)
+
