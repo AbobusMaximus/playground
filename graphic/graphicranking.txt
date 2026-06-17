@@ -38,3 +38,43 @@ C-Tier
 
     Hunyuan-DiT (Tencent)
 
+    Image Generation Tier List(2026)
+
+S-Tier
+
+    GPT Image 2 (High/Medium) (OpenAI)
+
+    Reve 2.0
+
+    HiDream-O1-Image-1.5
+
+A-Tier
+
+    FLUX.2 [max] (Black Forest Labs)
+
+    Gemini 3.1 Flash Image Preview (Nano Banana 2) (Google)
+
+    MAI-Image-2.5-Flash (Foundry) (Microsoft)
+
+    Recraft V4.1 Utility Pro
+
+B-Tier
+
+    grok-imagine-image-quality (xAI)
+
+    Krea 2 Large / Medium
+
+    Luma UNI 1 Max
+
+    Midjourney v6.5 / v7
+
+C-Tier
+
+    DomoAI (FX V1 / Flux-infused)
+
+    Adobe Firefly v4
+
+    Seedream 4.5 / 5.0 Lite (ByteDance)
+
+    Qwen Image 2.0 Pro / Max (Alibaba)
+
