@@ -1,0 +1,39 @@
+LLM Tier List (2025)
+
+S-Tier
+
+    Claude 3.7 Sonnet (Anthropic)
+
+    OpenAI o3 / o3-mini
+
+    DeepSeek-R1
+
+A-Tier
+
+    Claude 3.5 Sonnet (Anthropic)
+
+    Gemini 2.0 Flash / 2.5 Pro (Google)
+
+    OpenAI o1 / o1-mini
+
+    GPT-4o (OpenAI)
+
+B-Tier
+
+    DeepSeek-V3
+
+    Grok 3 (xAI)
+
+    Llama 3.3 70B (Meta)
+
+    Claude 3.5 Haiku (Anthropic)
+
+C-Tier
+
+    Qwen 2.5 VL / 72B (Alibaba)
+
+    Mistral Large 2
+
+    Llama 3.1 405B (Meta)
+
+    Command R+ (Cohere)
