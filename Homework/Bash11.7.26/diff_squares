@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#Ciel ulohy je zobrat N cele cislo 1,2,3..
+#Zystit rozdiel medzi (1^2+2^2+3^2..) vs (1+2+3..)^2
+
+
