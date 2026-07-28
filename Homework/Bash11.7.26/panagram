@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#ciel je zystit ci sa vo vete nachadzaju vsetky pismena abecedy
+
+read -p "Sentence: " text
+
+lwtext="${text,,}"
+diff=0
+abc="abcdefghijklmnopqrstuvwxyz"
+
+for ((i=0 ; i<26 ; i++)); do
+    if [[ "$lwtext" == *"${abc:i:1}"* ]]; then
+        :
+    else
+        diff=$(($diff+1))
+        break
+    fi
+done
+
+if (($diff == 0)); then
+    echo "$text is a panagram"
+else
+    echo "$text is not a panagram"
+fi
