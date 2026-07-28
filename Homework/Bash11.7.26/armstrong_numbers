@@ -19,7 +19,5 @@ if (( $tot== $num )); then
     echo "it is an armstrong number"
 else
     echo "it is not an amstorng number"
-fi
-
-
+fi  
 
