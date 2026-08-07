@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# ciel je aby uzivatel zadal cislo a dlzku subskupiny a vytvorit skupiny 14345 a 2
+# => 1434 & 4345
+
+read -p "Number: " num
+read -p "# of digits in series: " n
+
+fin=0
+if (( ${#num} < ${n} )); then   
+    echo "No bueno"
+else
+    for (( i=0 ; i< (${#num} - n) + 1 ; i++ )); do
+        fin=${num:i:n}
+        echo "${fin}"
+    done
+fi
