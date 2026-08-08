@@ -1,0 +1,5 @@
+- https://devhints.io/bash
+- https://www.w3schools.com/bash/bash_intro.php
+- https://www.freecodecamp.org/news/bash-scripting-tutorial-linux-shell-script-and-command-line-for-beginners/#heading-input-and-output-in-bash-scripts
+- https://www.gnu.org/software/bash/manual/bash.pdf - For edge cases (dont read as a whole) 
+- https://www.gnu.org/software/bash/manual/bash.pdf - Prejst cele 
