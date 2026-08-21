@@ -94,11 +94,11 @@ chrome_management_service_setup() {
 
   mkdir -p "/etc/opt/chrome/policies/enrollment" # Makes a directory and parent directories or does nothing if already exists
   SIGNING_KEY_FILE="/etc/opt/chrome/policies/enrollment/DeviceTrustSigningKey" # Sets a shell variable with a value
-  if [ ! -e "$SIGNING_KEY_FILE" ]; then
-    touch "$SIGNING_KEY_FILE"
+  if [ ! -e "$SIGNING_KEY_FILE" ]; then # If file doesnt exist then 
+    touch "$SIGNING_KEY_FILE" #Create the /etc/opt... directory
   fi
 
-  chgrp chromemgmt "$SIGNING_KEY_FILE"
+  chgrp chromemgmt "$SIGNING_KEY_FILE" #Change goru
   chmod 664 "$SIGNING_KEY_FILE"
 }
 
