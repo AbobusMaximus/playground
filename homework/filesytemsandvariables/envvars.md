@@ -28,6 +28,11 @@ True enviorment variables:
 -HOME - Location of the home directory
 -PWD - The current directory (equivalnet to pwd output)
 -DISPLAY - Contains the identifier for the display
+-LD_LIBRARY_PATH - Contains a : list of directories that the dynamic linker should search for shared objects when building a process after exec
+    - LIBPATH or SHLIB_PATH - alternatives used on older versions
+LANG, LC_ALL, LC_... - Parameters to set the users locale (lang, region, perferences...)
+TZ - Time Zone, either specifies the time zone or references via usr/share/zoneinfo
+BROWSER - : list of web browsers, programs open from first to last
 
 Video Notes(https://www.youtube.com/watch?v=ADh_OFBfdEE):
 Each process has a NAME=VALUE [value is a string] (convention for uppercase) (Unix is case sensitive)
