@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh #viac basic bash
 #
 # Copyright 2009 The Chromium Authors
 # Use of this source code is governed by a BSD-style license that can be
@@ -14,15 +14,16 @@ if [ ! -x "$XDG_ICON_RESOURCE" ]; then # tests and negates wether the file is ex
 fi # closes if statement
 for icon in  product_logo_16.png product_logo_24.png product_logo_32.png product_logo_48.png product_logo_64.png product_logo_128.png product_logo_256.png; do # for each png in icon do the following
   size="$(echo ${icon} | sed 's/[^0-9]//g')" # variable size is the subshell output of the name piped into a regex thing that changes the name to only numbers
-  "$XDG_ICON_RESOURCE" install --size "${size}" "/opt/google/chrome/${icon}" \ # Runs the tool and installs the specified size from the opt file
-    "google-chrome"
+  "$XDG_ICON_RESOURCE" install --size "${size}" "/opt/google/chrome/${icon}" \ 
+    "google-chrome" # Runs the tool and installs the specified size from the opt file
+
 done
 # Update cache of .desktop file MIME types. Non-fatal since it's just a cache.
-update-desktop-database > /dev/null 2>&1 || true # sets STDERR to discard# Updates defaults.list file if present.
+update-desktop-database > /dev/null 2>&1 || true # sets STDOUT to discard and sets STDERR to whatever STDOUT is# Updates defaults.list file if present.
 update_defaults_list() { #sets a functions
   # $1: name of the .desktop file
   local DEFAULTS_LIST="/usr/share/applications/defaults.list" #local shell variable
-  if [ ! -f "${DEFAULTS_LIST}" ]; then # tests if there isnt a file called that?
+  if [ ! -f "${DEFAULTS_LIST}" ]; then # tests if VARIABLE is not a regular file
       return
   fi
   # Split key-value pair out of MimeType= line from the .desktop file,
@@ -30,15 +31,15 @@ update_defaults_list() { #sets a functions
   # spaces).
   mime_types="$(grep MimeType= /usr/share/applications/${1} | 
                 cut -d '=' -f 2- |
-                tr ';' ' ')" # Sets a var to the subshell resulst of finds something with pos pam 1 then give the result to cut which separates the field before the = sign and specifies to display the first 2 words of each line and then gives the result to translate all semicolons to spaces   
+                tr ';' ' ')" # Sets a var to the subshell resulst of finds something with pos pam 1 then give the result to cut which separates the field before the = sign and specifies to display the first 2 words of each line after the = and then gives the result to translate all semicolons to spaces   
   for mime_type in ${mime_types}; do # for a counter for each element is mime_types do the following
     if egrep -q "^${mime_type}=" "${DEFAULTS_LIST}"; then #If something is extended greped and is equal to default list then do the following
       if ! egrep -q "^${mime_type}=.*${1}" "${DEFAULTS_LIST}"; then
-        default_apps="$(grep ${mime_type}= "${DEFAULTS_LIST}" | #Set var from a subshell wether the searched variable is equal to the other variable and then pipe the result to cut to keep everything before the = and keep the first two words of each line 
+        default_apps="$(grep ${mime_type}= "${DEFAULTS_LIST}" | #Set var from a subshell wether the searched variable is equal to the other variable and then pipe the result to cut to keep everything after the = and keep the first two words of each line 
                         cut -d '=' -f 2-)"
         egrep -v "^${mime_type}=" "${DEFAULTS_LIST}" > "${DEFAULTS_LIST}.new" # Print the stuff that doesent start with mime_type and put the reuslt into defaults list new
         echo "${mime_type}=${default_apps};${1}" >> "${DEFAULTS_LIST}.new" # Append the new things?
-        mv "${DEFAULTS_LIST}.new" "${DEFAULTS_LIST}" #Copies the file without a suffix
+        mv "${DEFAULTS_LIST}.new" "${DEFAULTS_LIST}" #Moves the file without a suffix the .new will no longer exist
       fi
     else
       # If there's no mention of the mime type in the file, add it.
@@ -46,7 +47,7 @@ update_defaults_list() { #sets a functions
     fi
   done
 }
-update_defaults_list "google-chrome.desktop" #Calls the function
+update_defaults_list "google-chrome.desktop" #Defines the function
 
 # This function uses sed to insert the contents of one file into another file,
 # after the first line matching a given regular expression. If there is no
@@ -55,9 +56,9 @@ insert_after_first_match() { #calls a function
   # $1: file to update
   # $2: regular expression
   # $3: file to insert
-  sed -i -e "1,/$2/ { #overwrite multiple commands (dont understand what is what)
-    /$2/ r $3
-    }" "$1"
+  sed -i -e "1,/$2/ { #from line one to and including the line that matches $2  
+    /$2/ r $3 # inserts file $3 after the current line 
+    }" "$1" #in file $1
 }
 
 # If /usr/share/gnome-control-center/default-apps/gnome-default-applications.xml
@@ -68,11 +69,13 @@ GNOME_DFL_APPS=/usr/share/gnome-control-center/default-apps/gnome-default-applic
 if [ -f "$GNOME_DFL_APPS" ]; then #if gnome dfl is a regular file then
 # Conditionally insert the contents of the file "default-app-block" after the
 # first "<web-browsers>" line we find in gnome-default-applications.xml
-fgrep -q "Google Chrome" "$GNOME_DFL_APPS" || insert_after_first_match \ # Find Google chrome as a string (not regex) in gnome.. or call insert after.. and add the following as input into the function (as parameters)
-    "$GNOME_DFL_APPS" \
-    "^[ 	]*<web-browsers>[ 	]*$" \ # Parameters for fgrep
+fgrep -q "Google Chrome" "$GNOME_DFL_APPS" || insert_after_first_match \    "$GNOME_DFL_APPS" \ 
+    "^[ 	]*<web-browsers>[ 	]*$" \ 
     "/opt/google/chrome/default-app-block"
 fi
+# Find Google chrome as a string (not regex) in gnome.. or call insert after.. and add the following as input into the function (as parameters)
+ # Parameters for fgrep
+
 
 # This function performs the setup for the chrome management service process.
 # It creates a new chromemgmt group, creates the signing key file, and updates
@@ -82,23 +85,23 @@ chrome_management_service_setup() {
     return
   fi
 
-  if ! grep -q "install_device_trust_key_management_command=true" \ # if install... is not not found in defaults file then return
-    "$DEFAULTS_FILE"; then
+  if ! grep -q "install_device_trust_key_management_command=true" \     "$DEFAULTS_FILE"; then # if instal.. is not found in defaults file the return
     return
   fi
+ # if install... is found in defaults file then return
 
-  getent group chromemgmt > /dev/null || groupadd chromemgmt # Discard errors? or overwrite something into devnull or do something else?
 
+  getent group chromemgmt > /dev/null || groupadd chromemgmt # get entry of chromemgmt and discard output if that fails add group chromemgmt
   chgrp chromemgmt "/opt/google/chrome/chrome-management-service" # Change group of chromemgmt
   chmod 2755 "/opt/google/chrome/chrome-management-service" # Modifies the privelages of the file 
 
   mkdir -p "/etc/opt/chrome/policies/enrollment" # Makes a directory and parent directories or does nothing if already exists
   SIGNING_KEY_FILE="/etc/opt/chrome/policies/enrollment/DeviceTrustSigningKey" # Sets a shell variable with a value
   if [ ! -e "$SIGNING_KEY_FILE" ]; then # If file doesnt exist then 
-    touch "$SIGNING_KEY_FILE" #Create the /etc/opt... directory
+    touch "$SIGNING_KEY_FILE" #Create the /etc/opt... empty file
   fi
 
-  chgrp chromemgmt "$SIGNING_KEY_FILE" #Change group of chrome managment to something?
+  chgrp chromemgmt "$SIGNING_KEY_FILE" #Change group of signing key to chromemgmt 
   chmod 664 "$SIGNING_KEY_FILE" # change the permissions to rw-rw-r--
 }
 
@@ -109,13 +112,13 @@ if [ -f "/opt/google/chrome/apparmor.d/google-chrome-stable" ]; then # If file e
   if [ -f "/etc/apparmor.d/abi/4.0" ] && [ -x /sbin/apparmor_parser ]; then # If file exists and apparmor is executable then 
     # Check for exact attachment collision with Ubuntu's native chrome profile.
     if [ "google-chrome-stable" = "google-chrome-stable" ] && \
-       [ -f "/etc/apparmor.d/chrome" ]; then # Checks the same? and then checks is /etc/... exists
+       [ -f "/etc/apparmor.d/chrome" ]; then # Checks the same and then checks is /etc/... exists
       # Skip installation if a conflicting profile exists.
       true
     else
       cp "/opt/google/chrome/apparmor.d/google-chrome-stable" \
         "/etc/apparmor.d/google-chrome-stable" #copies file from one place to another
-      /sbin/apparmor_parser -r "/etc/apparmor.d/google-chrome-stable" || true # I do know or true
+      /sbin/apparmor_parser -r "/etc/apparmor.d/google-chrome-stable" || true #Reload apparmor or true
     fi
   fi
 fi
@@ -165,10 +168,11 @@ update-alternatives --install /usr/bin/gnome-www-browser gnome-www-browser \
 
 update-alternatives --install /usr/bin/google-chrome google-chrome \
   /usr/bin/google-chrome-stable $PRIORITY
-# Dont really get this, some update possibility stuff? 
+# Updates thorugh different channels based on their priority
 
 # sources.list setting for google-chrome updates.
-REPOCONFIG="deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" #Other locations of updates for the system? One specified manually and on e in regex
+REPOCONFIG="deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" 
+#Other update location 
 REPOCONFIGREGEX="deb (\[arch=[^]]*\bamd64\b[^]]*\][[:space:]]*) https?://dl.google.com/linux/chrome/deb/ stable main"
 # This file is automatically generated by update_key_include.py
 # Do not edit this file directly.
@@ -315,11 +319,11 @@ kJUJr8eR3zHs94v8IPir5cS6FFqchlqxto/A5LPpxYbXnfY+x1QQkyv3euOH2+9x
 nYB57gEQf2XL4P+pZQnKy6WMyWnFD6Yb2fQQVFsP0uGTm0v0CsmWxRndaD9rY35w
 0VKRfNSbDRGP+JSZlxIhNwzxA5IrpQ==
 KEYDATA
-) # A variable is set to some very comlex subshell stuff
+) #Implementing a long blob into a single shell
 
 PGP_KEY_CHECKSUM="=djNO" # variable set to value
 
-PGP_SUBKEYS="32EE5355A6BC6E42 FD533C07C264648F 1D09C015006FEAB8" # 3 variables in a variable (not an array)
+PGP_SUBKEYS="32EE5355A6BC6E42 FD533C07C264648F 1D09C015006FEAB8" # 3 words in a variable (not an array)
 
 APT_CONFIG="$(command -v apt-config 2>/dev/null)" # Sets the variable to usr/bin/apt-config or discards the error
 
@@ -327,12 +331,12 @@ GPG_FILE="/usr/share/keyrings/google-chrome.gpg" #sets a shell var
 
 # Set variables for the locations of the apt trusted keyrings.
 find_apt_trusted() { # Define function 
-  eval $("$APT_CONFIG" shell APT_TRUSTEDDIR 'Dir::Etc::trustedparts/d') # Huh
+  eval $("$APT_CONFIG" shell APT_TRUSTEDDIR 'Dir::Etc::trustedparts/d') #Ask apt for trusted directory
 }
 
 # Set variables for the locations of the apt sources lists.
 find_apt_sources() { # sets a function
-  eval $("$APT_CONFIG" shell APT_SOURCESDIR 'Dir::Etc::sourceparts/d') #huh#2
+  eval $("$APT_CONFIG" shell APT_SOURCESDIR 'Dir::Etc::sourceparts/d') #Asks for asource directory
   SOURCES_FILE="$APT_SOURCESDIR/google-chrome.sources" #set var to value
 }
 
@@ -369,14 +373,14 @@ remove_legacy_list() {
   # Check for other sources (strict check for 'ours')
   # If there are any lines starting with 'deb' (commented or not) that do NOT
   # match our strict regex, keep the file.
-  if grep -E "^[[:space:]]*#?[[:space:]]*deb" "$LEGACY_LIST" | #extended grep look for regex expression? and then give the output to the following grep
+  if grep -E "^[[:space:]]*#?[[:space:]]*deb" "$LEGACY_LIST" | #Finds all the lines that look like a deb entry and then give the output to the following grep
       grep -v -E \ # invert the match (selects non matching lines)
     "^[[:space:]]*#?[[:space:]]*$REPOCONFIGREGEX" >/dev/null; 
   then
     # Other sources exist, comment out ours (strict match)
     sed -i -E "s|^[[:space:]]*($REPOCONFIGREGEX)|# \1|" "$LEGACY_LIST" # Regex matches 
   else
-    # No other sources, safe to remove and if there is a suffix, do something? 
+    # if no foreign deb lines 
     rm -f "$LEGACY_LIST" # force remove value
   fi
 }
@@ -469,30 +473,30 @@ add_nss_symlinks() { # define function
   get_lib_dir # call function
   for f in $NSS_FILES 
   do
-    target=$(echo $f | sed 's/\.[01]d$//') # in subshell echo value of f and edit it somehow
+    target=$(echo $f | sed 's/\.[01]d$//') # in subshell echo value of f and edit it remove trailing .0d or .1d 
     if [ -f "/$LIBDIR/$target" ]; then #if the file is regular 
       ln -snf "/$LIBDIR/$target" "/opt/google/chrome/$f"
     elif [ -f "/usr/$LIBDIR/$target" ]; then # if the file is regular
-      ln -snf "/usr/$LIBDIR/$target" "/opt/google/chrome/$f"
+      ln -snf "/usr/$LIBDIR/$target" "/opt/google/chrome/$f" #link forcefully soft without deference
     else
-      echo $f not found in "/$LIBDIR/$target" or "/usr/$LIBDIR/$target".
-      exit 1
+      echo $f not found in "/$LIBDIR/$target" or "/usr/$LIBDIR/$target". #echo that this was not found here or here
+      exit 1 #exit with code 1
     fi
   done
 }
 
-remove_nss_symlinks() {
-  for f in $NSS_FILES
+remove_nss_symlinks() { # Define function
+  for f in $NSS_FILES # for element in variable
   do
-    rm -rf "/opt/google/chrome/$f"
+    rm -rf "/opt/google/chrome/$f" #forcefully remove file from opt/chrome...
   done
 }
 
-remove_udev_symlinks() {
-  rm -rf "/opt/google/chrome/libudev.so.0"
+remove_udev_symlinks() { #define function
+  rm -rf "/opt/google/chrome/libudev.so.0" # remove function
 }
 
-remove_udev_symlinks
+remove_udev_symlinks # call function
 
 ## MAIN ##
 install_key
