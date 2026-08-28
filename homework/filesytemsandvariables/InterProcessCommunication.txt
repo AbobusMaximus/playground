@@ -1,0 +1,65 @@
+Inter-Process Communication (IPC)
+We wan isolated processes to convey information to each other
+- Used for breaking bigger tasks for efficiency
+Simplest IPC form is the exit statuses of processe
+- A one time opportunuty to send a single integer to the Parent process
+    -This exit status indicated wether the process ran sucessfully or no 
+     -exit code 0 or not 0
+waitpid (process identification number)
+- allows parent to wait for child process to finish
+- allows the parent to read the exit status
+
+example: 
+waitpid(p1, &status, 0)
+p1 = PID
+&status = Pointer to an integer in which the kernel will deposit the childs exit status
+0 = tells the system to wait until the child exits
+
+Zombie processes
+When a process forks a child, the child will eventually exit.
+-The exit code is stored, but not in the child because that already exited
+ -The kernel tracks the exit status which is there until parent calls waitpid or exits itself
+The child process enters a zombie state where the process no longer exists but the kernel still tracks the PID and exit status
+-These processes consume kernel resources
+  -Trick is to call waitpid for each child process with -1 as the PID, which checks arbitrary childs
+
+Limitiations of IPC via exit status
+-Communicates very little info between processes
+-Can only deliver the info after the program already exited, restricting listening processes
+
+Pipes |
+Allows processes to communicate, they can read and write files on the disk, or can be more efficient
+- Combuning shell commands via the pipe |
+- Speeding up opereations with large data sets that then report to the parent process
+
+Pipe setup
+A pipe provides a one directional ordered transport. 
+A process can pipe to itself but its most powerful with fork()
+ -Allows communication between parent and child processes
+
+Pipes are created with the pipe() system call
+
+File descriptors are identifiers that the kernel uses to keep track of open resources (such as files) used by user-space processes. User-space processes refer to these resources using integer file descriptor (FD) numbers; in the kernel, the FD numbers index into a FD table maintained for each process.
+?
+
+Pipe looks like this: int pipe(int pfd[2]);
+pipe file descriptor
+
+It is the user-space process's responsibility to allocate memory for the pfd array
+ -can be global var, stack or heap
+-This follows a general principle with Linux system calls: the memory that the kernel writes data or information to must be allocated by user-space and a valid pointer passed into the kernel.
+
+Successful pipe creates 2 file descriptors placed in pfd:
+pfd[0]: read end of the pipe (start)
+
+pfd[1]: write end of the pipe (end)
+
+Pipes can be created between parent and child process when the pipe gets made befor the fork
+
+Pipes can be between 2 child processes
+
+MPSC (multiple 
+
+Pipes are kernel mediated shared memory buffers that processes access via file descriptors. 
+Combining pipes and forking allows the establishing of communication betwwen children or the child and parent 
+This allows for parallelism in shells and running multiple processes on multi processor computers.
