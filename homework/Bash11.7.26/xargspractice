@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# najst pocet riadkov v directory dokopy a potom cez find to pipnut xargs wc -l do find 
+
+#Cele zadanie: Find all .sh files and count their total lines combined. Pipe find into xargs wc -l. Notice why a plain pipe wouldn't work — wc wants filenames as arguments, not on stdin, and xargs is the converter.
+#Skill: feeding a list into a command that expects arguments, not stdin.
+
+find . -name "*.sh"| xargs wc -l
+
